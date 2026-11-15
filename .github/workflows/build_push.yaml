@@ -36,7 +36,7 @@ jobs:
         run: docker build -t iris-ga6 .
 
       - name: Tag Docker image in the repo
-        run: docker tag iris-ga6 {{ env.REGION }}-docker.pkg.dev/iitm-mlops-project/ga6-repo/iris-ga6:latest
+        run: docker tag iris-ga6 ${{ env.REGION }}-docker.pkg.dev/iitm-mlops-project/ga6-repo/iris-ga6:latest
 
       - name: Push image
-        run: docker push {{ env.REGION }}-docker.pkg.dev/iitm-mlops-project/ga6-repo/iris-ga6:latest
+        run: docker push ${{ env.REGION }}-docker.pkg.dev/iitm-mlops-project/ga6-repo/iris-ga6:latest
