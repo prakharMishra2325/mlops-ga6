@@ -40,3 +40,20 @@ jobs:
 
       - name: Push image
         run: docker push ${{ env.REGION }}-docker.pkg.dev/iitm-mlops-project/ga6-repo/iris-ga6:latest
+
+      - name: Get GKE credentials
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: demo-gke-iris-cluster
+          location: us-central1
+
+      - name: Deploy to GKE
+        run: kubectl apply -f k8s/deployment.yaml
+
+      - name: Restart deployment to pick up the new image
+        run: kubectl rollout restart deployment/iris-ga6
+
+      - name: Verify rollout
+        run: |
+          kubectl rollout status deployment/iris-ga6 --timeout=180s
+          kubectl get service iris-ga6
